@@ -23,28 +23,23 @@ public class MazeWriter {
 		 *    choose from
 		 */
 
-		ArrayList<Integer> unusedVertices = new ArrayList<Integer>();
+		ArrayList<Integer[]> unusedVertices = new ArrayList<Integer[]>();
 
 		// Fill unusedVertices with the unused vertices in the maze
-		int numItems = 0;
+
+		/*
+		 * itemNum stores the vertices as references to two arrays:
+		 * itemNum[0] references the column of the vertex (b[i])
+		 * itemNum[1] references the index of the vertex within the
+		 *  column (b[i][j])
+		 */
+		int[] itemNum = new int[2];
 		for(int i = 0; i < b.length; i++) {
 			for(int j = 0; j < b[i].length; j++) {
-				unusedVertices.add(numItems);
-				System.out.println("Added " + numItems + " to list of vertices");
-				numItems++;
+
 			}
 		}
-		
-		// Remove vertices that are on edges
-		double verticesDouble = numItems;
-		for(int i = 0;) {
-			
-		}
-			
-		// Make first wall
-		
-		
-		
+
 
 	}
 }
