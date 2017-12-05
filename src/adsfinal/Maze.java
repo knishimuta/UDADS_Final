@@ -17,7 +17,7 @@ public class Maze extends JFrame{
 		neighborsOf(0, 0);
 		neighborsOf(1, 1);
 		
-		MazeWriter.buildMaze();
+		MazeWriter.buildMaze(board);
 	}
 
 	

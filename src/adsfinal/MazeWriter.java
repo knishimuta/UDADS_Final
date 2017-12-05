@@ -1,8 +1,10 @@
 package adsfinal;
 
+import java.util.ArrayList;
+
 public class MazeWriter {
 
-	static void  buildMaze() {
+	static void  buildMaze(int[][][] b) {
 		/*
 		 * Builds maze using initial maze as base:
 		 *  - Choose random vertex in maze that is not 
@@ -13,5 +15,10 @@ public class MazeWriter {
 		 *  - Repeat until there are no empty points to
 		 *    choose from
 		 */
+
+		ArrayList<Integer> unusedVertices = new ArrayList<Integer>();
+		
+		
+
 	}
 }
