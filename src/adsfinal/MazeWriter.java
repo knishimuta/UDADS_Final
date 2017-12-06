@@ -54,11 +54,9 @@ public class MazeWriter {
 	static boolean arrayContains(int[] array, int x) {
 		for(int i = 0; i < array.length; i++) {
 			if(array[i] == x) {
-				System.out.println("Array contains " + x);
 				return true;
 			}
 		}
-		System.out.println("Array does not contain " + x);
 		return false;
 	}
 	
