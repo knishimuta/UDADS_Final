@@ -3,7 +3,6 @@ package adsfinal;
 import java.awt.*;
 import javax.swing.*;
 
-
 public class mazePanel extends JPanel{
 
 	//MAIN
@@ -25,31 +24,71 @@ public class mazePanel extends JPanel{
 		
 		this.setLayout(new BorderLayout());
 
-
-		JButton south = new JButton("South");
-		this.add(south, BorderLayout.SOUTH);
 		
-
-
-		//Title Panel
-//		p.add(new Panel pTitle, BorderLayout.NORTH);
-//		tt = new TextField("Cool Maze Game"); //title text
-//		stt = new TextField("A Collaboration by Kyle, Joan, and MK"); // subtitle text
-//		pTitle.add(tt);
-//		pTitle.add(stt);
-//
-//
-//		p.add(new Panel pMaze, BorderLayout.CENTER);
-//
-//
-//		p.add(new Panel pControls, BorderLayout.SOUTH);
-//		pb = new JButton("Pause"); //pause button
-//		rmb = new JButton("Resume"); //resume button
-//		rstb = new JButton("Restart"); //restart button
-//		pControls.add(pb);
-//		pControls.add(rmb);
-//		pControls.add(rstb);
+		/* *****************************************************************************
+		 * TITLE - NORTH PANEL OF "WINDOW"
+		 */
+		JPanel titlePanel = new JPanel();
+		titlePanel.setLayout(new BorderLayout());
+		JTextField title = new JTextField("Cool Maze Thing");
+		JTextField subtitle = new JTextField("A Collaboration by Joan, Kyle, and MK");
+		title.setBackground(new java.awt.Color(179, 255, 230)); //light blue-green
+		subtitle.setBackground(new java.awt.Color(179, 255, 230)); //light blue-green
+		titlePanel.add(title, BorderLayout.NORTH);
+		titlePanel.add(subtitle,BorderLayout.CENTER);
+		this.add(titlePanel, BorderLayout.NORTH);
 		
+		// ******************************************************************************
+		
+		
+		
+		
+		
+		/* ******************************************************************************
+		 * CONTROL PANEL - SOUTH PANEL OF "WINDOW"
+		 */
+		
+		//Create new panel for southern panel of "window"
+		JPanel controlPanel = new JPanel();
+		controlPanel.setLayout(new GridLayout());
+		
+		//Create new buttons for controlPanel
+		JButton pause = new JButton("Pause");
+		pause.setBackground(new java.awt.Color(255, 77, 77)); //red
+		JButton resume = new JButton("Resume");		
+		resume.setBackground(new java.awt.Color(0, 102, 0)); //green
+		JButton idek = new JButton("Idek...but this is a button");
+		idek.setBackground(new java.awt.Color(204, 153, 255)); //purple
+		
+		//Add buttons to controlPanel
+		controlPanel.add(pause);
+		controlPanel.add(resume);
+		controlPanel.add(idek);
+		
+		//Add controlPanel to window
+		this.add(controlPanel, BorderLayout.SOUTH);
+		
+		// *******************************************************************************
+		
+		
+		
+		
+		
+		/* *******************************************************************************
+		 * DRAWINGPANEL - CENTER PANEL OF "WINDOW" 
+		 */
+		//Create new panel for center panel of "window"
+		JPanel drawingPanel = new JPanel();
+		drawingPanel.setLayout(new BorderLayout());
+		
+		//Draw Maze...somehow
+		
+		
+		
+		
+		
+		// *******************************************************************************
+
 	  
 	}
 
