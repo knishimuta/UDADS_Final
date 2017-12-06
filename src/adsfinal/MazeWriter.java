@@ -8,17 +8,16 @@ import java.util.ArrayList;
 public class MazeWriter {
 
 	static void  buildMaze(int[][][] b) {
-		/*
+		/**
 		 * NOTE --> Written based on the assumption that the maze is square
 		 */
 
-		/*
+		/**
 		 * Builds maze using initial maze as base:
 		 *  - Choose random vertex in maze that is not 
 		 *    connected to a wall
-		 *  - Run a line from the vertex until it hits
-		 *    a wall
-		 *  - Make the line into a wall
+		 *  - Run a wall from the vertex until it hits
+		 *    another wall
 		 *  - Repeat until there are no empty points to
 		 *    choose from
 		 */
@@ -27,28 +26,37 @@ public class MazeWriter {
 
 		// Fill unusedVertices with the blank vertices in the maze
 
-		/*
+		/**
 		 * itemNum stores the vertices as references to two arrays:
 		 * itemNum[0] references the column of the vertex (b[i])
 		 * itemNum[1] references the index of the vertex within the
 		 *  column (b[i][j])
 		 */
-		int[] vertexID = new int[2];
+		
 		for(int i = 0; i < b.length; i++) {
-			vertexID[0] = i; // column number
 			for(int j = 0; j < b[i].length; j++) {
-				if(arrayContains(b[i][j], 1)) {
-					continue;
+				if(!arrayContains(b[i][j], 1)) {
+					int[] vertexID = new int[2];
+					vertexID[0] = i;
+					vertexID[1] = j;
+					System.out.println("Adding {" + vertexID[0] + ", " + vertexID[1] + "}"
+							+ " as unused vertex");
+					unusedVertices.add(vertexID);
 				}
 				else {
-					vertexID[1] = j; // row number
-					unusedVertices.add(vertexID);
-					System.out.println("Added {" + vertexID[0] + ", " + vertexID[1] + "}"
-							+ " as unused vertex");
+					continue;
 				}
+				
 			}
 		}
-
+		
+		System.out.print("List of unused vertices: ");
+		for(int i = 0; i < unusedVertices.size(); i++) {
+			System.out.print("{");
+			int[] item = unusedVertices.get(i);
+			System.out.print(item[0] + ", " + item[1] + "} ");
+		}
+		System.out.println("\n");
 
 		/*
 		 * Pick random unused vertex and use it to spawn a wall
@@ -61,19 +69,21 @@ public class MazeWriter {
 			int[] initialVertex = unusedVertices.remove(vertexToUse);
 			System.out.println("Vertices left: "+ unusedVertices.size());
 			System.out.println("Index of vertex to use: " + vertexToUse);
-			System.out.println("Vertex chosen: {" + initialVertex[0] + ", " + initialVertex[1] + "} \n");
-			
+			System.out.println("Vertex chosen: {" + initialVertex[0] + ", " + initialVertex[1] + "}");
+
 			/*
 			 *     0           N
 			 *   3 + 1  -->  W + E
 			 *     2           S
 			 */
 			int directionToGo = pickRandNumber(0, 3);
+			System.out.println("Direction to go: " + directionToGo + "\n");
 			if(directionToGo == 0) {
-				b[initialVertex[0]][initialVertex[1]][0] = 1;
+				
 			}
+
 		}
-		
+
 		Maze.drawBoard(b);
 
 	}
