@@ -23,9 +23,9 @@ public class MazeWriter {
 		 *    choose from
 		 */
 
-		ArrayList<Integer[]> unusedVertices = new ArrayList<Integer[]>();
+		ArrayList<int[]> unusedVertices = new ArrayList<int[]>();
 
-		// Fill unusedVertices with the unused vertices in the maze
+		// Fill unusedVertices with the blank vertices in the maze
 
 		/*
 		 * itemNum stores the vertices as references to two arrays:
@@ -33,13 +33,33 @@ public class MazeWriter {
 		 * itemNum[1] references the index of the vertex within the
 		 *  column (b[i][j])
 		 */
-		int[] itemNum = new int[2];
+		int[] vertexID = new int[2];
 		for(int i = 0; i < b.length; i++) {
+			vertexID[0] = i;
 			for(int j = 0; j < b[i].length; j++) {
-
+				if(arrayContains(b[i][j], 1)) {
+					continue;
+				}
+				else {
+					vertexID[1] = j;
+					unusedVertices.add(vertexID);
+					System.out.println("Added {" + vertexID[0] + ", " + vertexID[1] + "}");
+				}
 			}
 		}
 
 
 	}
+	
+	static boolean arrayContains(int[] array, int x) {
+		for(int i = 0; i < array.length; i++) {
+			if(array[i] == x) {
+				System.out.println("Array contains " + x);
+				return true;
+			}
+		}
+		System.out.println("Array does not contain " + x);
+		return false;
+	}
+	
 }
