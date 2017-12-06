@@ -3,7 +3,7 @@ package adsfinal;
 import java.awt.*;
 import javax.swing.*;
 
-public class mazePanel extends JPanel{
+public class MazePanel extends JPanel{
 
 //	//MAIN
 //	public static void main(String[] args) {
@@ -19,10 +19,18 @@ public class mazePanel extends JPanel{
 //	}
 
 	//CONSTRUCTOR
-	mazePanel(){
-		
-		this.setPreferredSize(500,500);
+	MazePanel(){
+		//set dimension and layout type
+		this.setPreferredSize(new Dimension(500,500));
 		this.setLayout(new BorderLayout());
+		
+		
+		//override paint command to do animation
+		
+		
+		//    
+		Graphics2D g = (Graphics2D) this.getGraphics();
+		g.setColor(Color.gray);
 
 		
 

@@ -4,14 +4,14 @@ package adsfinal;
 import java.awt.*;
 import javax.swing.*;
 
-public class fullFrame extends JPanel{
+public class FullFrame extends JPanel{
 
 	//MAIN
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("mkTesting");
 		frame.setLayout(new BorderLayout());
 		
-		JPanel window = new fullFrame();
+		JPanel window = new FullFrame();
 		frame.add(window, BorderLayout.CENTER);
 		
 		frame.pack();
@@ -20,7 +20,7 @@ public class fullFrame extends JPanel{
 	}
 
 	//CONSTRUCTOR
-	fullFrame(){
+	FullFrame(){
 		
 		
 		this.setLayout(new BorderLayout());
@@ -83,8 +83,8 @@ public class fullFrame extends JPanel{
 //		drawingMazePanel.setLayout(new BorderLayout());
 		
 		//Draw Maze...somehow
-		//Call mazePanel Class
-		mazePanel MP = new mazePanel();
+		//"Call" mazePanel class
+		MazePanel MP = new MazePanel();
 		this.add(MP, BorderLayout.CENTER);
 		
 		// *******************************************************************************
