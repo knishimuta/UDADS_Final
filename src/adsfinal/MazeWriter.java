@@ -79,8 +79,40 @@ public class MazeWriter {
 			int directionToGo = pickRandNumber(0, 3);
 			System.out.println("Direction to go: " + directionToGo + "\n");
 			if(directionToGo == 0) {
-				
+				b[initialVertex[0]][initialVertex[1]][0] = 1;
+				b[initialVertex[0]][initialVertex[1]+1][2] = 1;
+				if(initialVertex[1] < b[initialVertex[0]][initialVertex[1]].length - 2) {
+					b[initialVertex[0]][initialVertex[1]+1][0] = 1;
+					b[initialVertex[0]][initialVertex[1]+2][2] = 1;
+				}
 			}
+			if(directionToGo == 1) {
+				b[initialVertex[0]][initialVertex[1]][1] = 1;
+				b[initialVertex[0]+1][initialVertex[1]][3] = 1;
+				if(initialVertex[0] < b[initialVertex[0]][initialVertex[1]].length - 2) {
+					b[initialVertex[0]+1][initialVertex[1]][1] = 1;
+					b[initialVertex[0]+2][initialVertex[1]][3] = 1;
+				}
+			}
+			
+			if(directionToGo == 2) {
+				b[initialVertex[0]][initialVertex[1]][2] = 1;
+				b[initialVertex[0]][initialVertex[1]-1][0] = 1;
+				if(initialVertex[1] > 1) {
+					b[initialVertex[0]][initialVertex[1]-1][2] = 1;
+					b[initialVertex[0]][initialVertex[1]-2][0] = 1;
+				}
+			}
+			
+			if(directionToGo == 3) {
+				b[initialVertex[0]][initialVertex[1]][3] = 1;
+				b[initialVertex[0]-1][initialVertex[1]][1] = 1;
+				if(initialVertex[0] > 1) {
+					b[initialVertex[0]-1][initialVertex[1]][3] = 1;
+					b[initialVertex[0]-2][initialVertex[1]][1] = 1;
+				}
+			}
+			
 
 		}
 
