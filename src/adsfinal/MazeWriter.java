@@ -58,18 +58,19 @@ public class MazeWriter {
 
 		while(!unusedVertices.isEmpty()) {
 			int vertexToUse = pickRandNumber(0, unusedVertices.size() - 1);
+			int[] initialVertex = unusedVertices.remove(vertexToUse);
 			System.out.println("Vertices left: "+ unusedVertices.size());
-			System.out.println("Vertex to use: " + vertexToUse + "\n");
+			System.out.println("Index of vertex to use: " + vertexToUse);
+			System.out.println("Vertex chosen: {" + initialVertex[0] + ", " + initialVertex[1] + "} \n");
+			
 			/*
 			 *     0           N
 			 *   3 + 1  -->  W + E
 			 *     2           S
 			 */
 			int directionToGo = pickRandNumber(0, 3);
-			int[] initalVertex = unusedVertices.remove(vertexToUse);
 			if(directionToGo == 0) {
-				
-				
+				b[initialVertex[0]][initialVertex[1]][0] = 1;
 			}
 		}
 		
