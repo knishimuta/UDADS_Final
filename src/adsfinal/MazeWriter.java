@@ -4,9 +4,11 @@
 package adsfinal;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MazeWriter {
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	static void  buildMaze(int[][][] b) {
 		/**
 		 * NOTE --> Written based on the assumption that the maze is square
@@ -22,7 +24,7 @@ public class MazeWriter {
 		 *    choose from
 		 */
 
-		ArrayList<int[]> unusedVertices = new ArrayList<int[]>();
+		HashMap<int[], ArrayList> unusedVertices = new HashMap<int[], ArrayList>();
 
 		// Fill unusedVertices with the blank vertices in the maze
 
@@ -31,30 +33,41 @@ public class MazeWriter {
 		 * itemNum[0] references the column of the vertex (b[i])
 		 * itemNum[1] references the index of the vertex within the
 		 *  column (b[i][j])
+		 *  
+		 *  UPDATE:
+		 *  itemNum is now a HashMap. Key is an integer array of
+		 *  pseudo-coordinates linked to an ArrayList the  available 
+		 *  directions that the vertex can go.
 		 */
-		
+
 		for(int i = 0; i < b.length; i++) {
 			for(int j = 0; j < b[i].length; j++) {
 				if(!arrayContains(b[i][j], 1)) {
 					int[] vertexID = new int[2];
+					ArrayList<Integer> vertexDir = new ArrayList<Integer>();
 					vertexID[0] = i;
 					vertexID[1] = j;
+
+					// Adding direction data to vertices
+					for(int direction = 0; direction < 4; direction++) {
+						vertexDir.add(direction);
+					}
 					System.out.println("Adding {" + vertexID[0] + ", " + vertexID[1] + "}"
 							+ " as unused vertex");
-					unusedVertices.add(vertexID);
+					unusedVertices.put(vertexID, vertexDir);
 				}
 				else {
 					continue;
 				}
-				
+
 			}
 		}
-		
+
 		System.out.print("List of unused vertices: ");
 		for(int i = 0; i < unusedVertices.size(); i++) {
 			System.out.print("{");
-			int[] item = unusedVertices.get(i);
-			System.out.print(item[0] + ", " + item[1] + "} ");
+			ArrayList<Integer> item = unusedVertices.get(i);
+			System.out.print(item.get(0) + ", " + item.get(0) + "} ");
 		}
 		System.out.println("\n");
 
@@ -66,54 +79,34 @@ public class MazeWriter {
 
 		while(!unusedVertices.isEmpty()) {
 			int vertexToUse = pickRandNumber(0, unusedVertices.size() - 1);
-			int[] initialVertex = unusedVertices.remove(vertexToUse);
+			ArrayList<Integer> initialVertex = unusedVertices.remove(vertexToUse);
 			System.out.println("Vertices left: "+ unusedVertices.size());
 			System.out.println("Index of vertex to use: " + vertexToUse);
-			System.out.println("Vertex chosen: {" + initialVertex[0] + ", " + initialVertex[1] + "}");
+			System.out.println("Vertex chosen: {" + initialVertex.get(0) + ", " + initialVertex.get(1) + "}");
 
 			/*
+			 * Now to make the walls!
+			 * 
 			 *     0           N
 			 *   3 + 1  -->  W + E
 			 *     2           S
 			 */
-			int directionToGo = pickRandNumber(0, 3);
-			System.out.println("Direction to go: " + directionToGo + "\n");
-			if(directionToGo == 0) {
-				b[initialVertex[0]][initialVertex[1]][0] = 1;
-				b[initialVertex[0]][initialVertex[1]+1][2] = 1;
-				if(initialVertex[1] < b[initialVertex[0]][initialVertex[1]].length - 2) {
-					b[initialVertex[0]][initialVertex[1]+1][0] = 1;
-					b[initialVertex[0]][initialVertex[1]+2][2] = 1;
-				}
+			ArrayList<Integer> availableDirections = new ArrayList<Integer>();
+			for(int i = 2; i < initialVertex.size(); i++) {
+				availableDirections.add(initialVertex.get(i));
 			}
-			if(directionToGo == 1) {
-				b[initialVertex[0]][initialVertex[1]][1] = 1;
-				b[initialVertex[0]+1][initialVertex[1]][3] = 1;
-				if(initialVertex[0] < b[initialVertex[0]][initialVertex[1]].length - 2) {
-					b[initialVertex[0]+1][initialVertex[1]][1] = 1;
-					b[initialVertex[0]+2][initialVertex[1]][3] = 1;
+			int chosenDirection = pickRandNumber(0, availableDirections.size()-1);
+			System.out.println("Direction chosen: " + chosenDirection + "\n");
+			
+			if(chosenDirection == 0) {
+				b[initialVertex.get(0)][initialVertex.get(1)][0] = 1;
+				b[initialVertex.get(0)][initialVertex.get(1)+1][2] = 1;
+				
+				if(initialVertex.get(1) < b[initialVertex.get(0)].length - 2) {
+					
 				}
 			}
 			
-			if(directionToGo == 2) {
-				b[initialVertex[0]][initialVertex[1]][2] = 1;
-				b[initialVertex[0]][initialVertex[1]-1][0] = 1;
-				if(initialVertex[1] > 1) {
-					b[initialVertex[0]][initialVertex[1]-1][2] = 1;
-					b[initialVertex[0]][initialVertex[1]-2][0] = 1;
-				}
-			}
-			
-			if(directionToGo == 3) {
-				b[initialVertex[0]][initialVertex[1]][3] = 1;
-				b[initialVertex[0]-1][initialVertex[1]][1] = 1;
-				if(initialVertex[0] > 1) {
-					b[initialVertex[0]-1][initialVertex[1]][3] = 1;
-					b[initialVertex[0]-2][initialVertex[1]][1] = 1;
-				}
-			}
-			
-
 		}
 
 		Maze.drawBoard(b);
