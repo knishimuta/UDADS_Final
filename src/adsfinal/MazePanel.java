@@ -19,22 +19,27 @@ public class MazePanel extends JPanel{
 //	}
 
 	//CONSTRUCTOR
-	MazePanel(){
+	public MazePanel(){
 		//set dimension and layout type
 		this.setPreferredSize(new Dimension(500,500));
 		this.setLayout(new BorderLayout());
 		
-		
-		//override paint command to do animation
-		
-		
-		//    
-		Graphics2D g = (Graphics2D) this.getGraphics();
-		g.setColor(Color.gray);
-
-		
 
 	}
+
+	@Override
+	public void paint(Graphics gg) {
+		Graphics2D g = (Graphics2D) gg;
+		g.setColor(new java.awt.Color(150, 50,70));
+		for(int i = 0; i < 15; i++) {
+			for(int j = 0; j < 15; j++) {
+				g.fill3DRect(i*20, j*20, 5+i, 5+j, false);
+			}
+		}
+		
+	}
+	
+	
 
 
 }
