@@ -36,7 +36,6 @@ public class MazeRunner {
 	  	while(!queue.isEmpty()) {
 	  		int[] first = queue.pop();
 	  		
-	  		
 	  	}
 
 		return start;
