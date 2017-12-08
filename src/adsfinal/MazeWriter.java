@@ -24,37 +24,24 @@ public class MazeWriter {
 		 *    choose from
 		 */
 
-		HashMap<int[], ArrayList> unusedVertices = new HashMap<int[], ArrayList>();
+		ArrayList<ArrayList> unusedVertices = new ArrayList<ArrayList>();
 
 		// Fill unusedVertices with the blank vertices in the maze
-
-		/**
-		 * itemNum stores the vertices as references to two arrays:
-		 * itemNum[0] references the column of the vertex (b[i])
-		 * itemNum[1] references the index of the vertex within the
-		 *  column (b[i][j])
-		 *  
-		 *  UPDATE:
-		 *  itemNum is now a HashMap. Key is an integer array of
-		 *  pseudo-coordinates linked to an ArrayList the  available 
-		 *  directions that the vertex can go.
-		 */
 
 		for(int i = 0; i < b.length; i++) {
 			for(int j = 0; j < b[i].length; j++) {
 				if(!arrayContains(b[i][j], 1)) {
-					int[] vertexID = new int[2];
-					ArrayList<Integer> vertexDir = new ArrayList<Integer>();
-					vertexID[0] = i;
-					vertexID[1] = j;
+					ArrayList<Integer> vertexID = new ArrayList<Integer>();
+					vertexID.add(i);
+					vertexID.add(j);
 
 					// Adding direction data to vertices
 					for(int direction = 0; direction < 4; direction++) {
-						vertexDir.add(direction);
+						vertexID.add(direction);
 					}
-					System.out.println("Adding {" + vertexID[0] + ", " + vertexID[1] + "}"
+					System.out.println("Adding {" + vertexID.get(0) + ", " + vertexID.get(1) + "}"
 							+ " as unused vertex");
-					unusedVertices.put(vertexID, vertexDir);
+					unusedVertices.add(vertexID);
 				}
 				else {
 					continue;
@@ -97,16 +84,16 @@ public class MazeWriter {
 			}
 			int chosenDirection = pickRandNumber(0, availableDirections.size()-1);
 			System.out.println("Direction chosen: " + chosenDirection + "\n");
-			
+
 			if(chosenDirection == 0) {
 				b[initialVertex.get(0)][initialVertex.get(1)][0] = 1;
 				b[initialVertex.get(0)][initialVertex.get(1)+1][2] = 1;
-				
+
 				if(initialVertex.get(1) < b[initialVertex.get(0)].length - 2) {
 					
 				}
 			}
-			
+
 		}
 
 		Maze.drawBoard(b);
