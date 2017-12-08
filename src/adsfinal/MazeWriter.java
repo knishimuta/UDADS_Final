@@ -10,6 +10,8 @@ public class MazeWriter {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	static void  buildMaze(int[][][] b) {
+		
+		System.out.println("\n ~~~~~~~~~~~ Begin buildMaze feedback. ~~~~~~~~~~~ \n");
 		/**
 		 * NOTE --> Written based on the assumption that the maze is square
 		 */
@@ -54,7 +56,7 @@ public class MazeWriter {
 		for(int i = 0; i < unusedVertices.size(); i++) {
 			System.out.print("{");
 			ArrayList<Integer> item = unusedVertices.get(i);
-			System.out.print(item.get(0) + ", " + item.get(0) + "} ");
+			System.out.print(item.get(0) + ", " + item.get(1) + "} ");
 		}
 		System.out.println("\n");
 
@@ -85,6 +87,12 @@ public class MazeWriter {
 				availableDirections.add(initialVertex.get(i));
 			}
 			int chosenDirection = pickRandNumber(0, availableDirections.size()-1);
+			System.out.println("Number of directions to choose from: " + availableDirections.size());
+			System.out.print("Available Directions:");
+			for(int i = 0; i < availableDirections.size(); i++) {
+				System.out.print(" " + availableDirections.get(i));
+			}
+			System.out.println("");
 			System.out.println("Direction chosen: " + chosenDirection + "\n");
 
 			if(chosenDirection == 0) {
@@ -94,7 +102,24 @@ public class MazeWriter {
 				if(y == 1) {
 					b[x][y+1][0] = 1;
 					b[x][y+2][2] = 1;
+
+					for(int i = 0; i < unusedVertices.size(); i++) {
+						ArrayList<Integer> thisVertex = unusedVertices.remove(i);
+						ArrayList<Integer> thisVertexDirections = new ArrayList<Integer>();
+						for(int j = 2; j < thisVertex.size(); j++) {
+							thisVertexDirections.add(thisVertex.get(j));
+						}
+						if((thisVertex.get(0) == 2) && (thisVertexDirections.contains(3))) {
+							thisVertex.remove(3);
+						}
+						if((thisVertex.get(0) == 1) && (thisVertexDirections.contains(1))) {
+							thisVertex.remove(1);
+						}
+						unusedVertices.add(thisVertex);
+					}
 				}
+
+
 			}
 			if(chosenDirection == 1) {
 				b[x][y][1] = 1;
@@ -126,8 +151,10 @@ public class MazeWriter {
 
 		}
 
+		System.out.println("");
 		Maze.drawBoard(b);
 
+		System.out.println(" ~~~~~~~~~~~ End buildMaze feedback. ~~~~~~~~~~~ \n");
 	}
 
 	static boolean arrayContains(int[] array, int x) {
