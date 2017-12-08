@@ -67,9 +67,11 @@ public class MazeWriter {
 		while(!unusedVertices.isEmpty()) {
 			int vertexToUse = pickRandNumber(0, unusedVertices.size() - 1);
 			ArrayList<Integer> initialVertex = unusedVertices.remove(vertexToUse);
+			int x = initialVertex.get(0);
+			int y = initialVertex.get(1);
 			System.out.println("Vertices left: "+ unusedVertices.size());
 			System.out.println("Index of vertex to use: " + vertexToUse);
-			System.out.println("Vertex chosen: {" + initialVertex.get(0) + ", " + initialVertex.get(1) + "}");
+			System.out.println("Vertex chosen: {" + x + ", " + y + "}");
 
 			/*
 			 * Now to make the walls!
@@ -86,11 +88,39 @@ public class MazeWriter {
 			System.out.println("Direction chosen: " + chosenDirection + "\n");
 
 			if(chosenDirection == 0) {
-				b[initialVertex.get(0)][initialVertex.get(1)][0] = 1;
-				b[initialVertex.get(0)][initialVertex.get(1)+1][2] = 1;
+				b[x][y][0] = 1;
+				b[x][y+1][2] = 1;
 
-				if(initialVertex.get(1) < b[initialVertex.get(0)].length - 2) {
-					
+				if(y == 1) {
+					b[x][y+1][0] = 1;
+					b[x][y+2][2] = 1;
+				}
+			}
+			if(chosenDirection == 1) {
+				b[x][y][1] = 1;
+				b[x+1][y][3] = 1;
+
+				if(x == 1) {
+					b[x+1][y][1] = 1;
+					b[x+2][y][3] = 1;
+				}
+			}
+			if(chosenDirection == 2) {
+				b[x][y][2] = 1;
+				b[x][y-1][0] = 1;
+
+				if(y == 2) {
+					b[x][y-1][2] = 1;
+					b[x][y-2][0] = 1;
+				}
+			}
+			if(chosenDirection == 3) {
+				b[x][y][3] = 1;
+				b[x-1][y][1] = 1;
+
+				if(x == 2) {
+					b[x-1][y][3] = 1;
+					b[x-2][y][1] = 1;
 				}
 			}
 
