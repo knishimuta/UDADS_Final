@@ -15,7 +15,7 @@ public class MazePanel extends JPanel{
 	//Initiate global variables
 	static int MPWIDTH = 500;
 	static int MPHEIGHT = MPWIDTH;
-	static int N = 7;
+	static int N = 6;
 	static int TILEWIDTH = MPWIDTH/N;
 	static int TILEHEIGHT = MPHEIGHT/N;
 
@@ -105,6 +105,7 @@ public class MazePanel extends JPanel{
 
 
 
+	
 
 
 	@Override
@@ -157,6 +158,13 @@ public class MazePanel extends JPanel{
 		
 		em.drawLine(N*TILEWIDTH, N*TILEHEIGHT-TILEHEIGHT, N*TILEWIDTH, N*TILEHEIGHT-2*TILEHEIGHT);
 		
+		
+		//draw rob bug
+		Graphics2D bm = (Graphics2D) gg; 
+		int robx = MazeRunner.rob[0];
+		int roby = MazeRunner.rob[1];
+		bm.setColor(new java.awt.Color(32, 135, 135));
+		bm.fillRect((TILEWIDTH/4) + robx, (N*TILEHEIGHT)-(TILEHEIGHT/4)-roby- TILEHEIGHT/2, TILEWIDTH/2, TILEHEIGHT/2);
 	}
 
 }

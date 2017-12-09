@@ -59,7 +59,7 @@ public class FullFrame extends JPanel{
 		pause.setBackground(new java.awt.Color(255, 77, 77)); //red
 		JButton resume = new JButton("Resume");		
 		resume.setBackground(new java.awt.Color(0, 102, 0)); //green
-		JButton idek = new JButton("Idek...but this is a button");
+		JButton idek = new JButton("Idekrn");
 		idek.setBackground(new java.awt.Color(204, 153, 255)); //purple
 		
 		//Add buttons to controlPanel
