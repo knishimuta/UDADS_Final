@@ -75,9 +75,6 @@ public class MazeBoard{
 			for(int y = 0; y < HEIGHT; y++){
 				String theBS = Arrays.toString(board[x][y]);
 				System.out.println(theBS);
-//				int lBS = theBS.length();
-				String numsOfBS = theBS.replaceAll("[^0-9]", "");
-//				System.out.println("Nums:" + numsOfBS + ".  length orig.:" + lBS);
 //				System.out.printf("(%d, %d): %s\n", x, y, Arrays.toString(board[x][y]));
 //				System.out.println(Arrays.toString(board[x][y]));
 				visited[x][y] = false;
