@@ -69,7 +69,7 @@ public class MazeBoard{
 				}
 			}
 		}
-
+		Maze.drawBoard(board);
 		// Print the board
 		for(int x = 0; x < WIDTH; x++){
 			for(int y = 0; y < HEIGHT; y++){
