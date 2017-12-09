@@ -14,16 +14,10 @@ public class MazeRunner {
 	 */
 	
 	public static void main(String[] args) {
-		int[] rob = {0,0};
-		
-		
-		
+		int[] rob = {0,0};		
 		
 	}
 
-	
-	
-	
 	public int[] nextStep(int[] initLoc) {
 		
 		int [] start = {0,0};
@@ -55,5 +49,7 @@ public class MazeRunner {
 	  		}
 	  	}
 		return start;
+	}
+		
 	}
 }
