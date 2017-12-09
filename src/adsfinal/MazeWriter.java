@@ -67,6 +67,32 @@ public class MazeWriter {
 					current = N*(y+1) + x;
 					Maze.drawBoard(b);
 				}
+				if(direction == 1) {
+					b[x][y][1] = 1;
+					b[x+1][y][3] = 1;
+					
+					//current[0] = x;
+					//current[1] = y+1;
+					current = N*y + (x+1);
+					Maze.drawBoard(b);
+				}
+				if(direction == 2) {
+					b[x][y][2] = 1;
+					b[x][y-1][0] = 1;
+					
+					//current[0] = x;
+					//current[1] = y+1;
+					current = N*(y-1) + x;
+					Maze.drawBoard(b);
+				}
+				if(direction == 3) {
+					b[x][y][3] = 1;
+					b[x-1][y][1] = 1;
+					
+					//current[0] = x;
+					//current[1] = y+1;
+					current = N*y + (x-1);
+				}
 			}
 			
 			
