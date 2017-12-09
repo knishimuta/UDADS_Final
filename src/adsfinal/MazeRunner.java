@@ -34,11 +34,26 @@ public class MazeRunner {
 	  	queue.add(start);
 	  	visited.add(start);
 	  	while(!queue.isEmpty()) {
-	  		int[] first = queue.pop();
-	  		
+	  		int[] first = queue.remove();
+	  		int x = first[0];
+	  		int y = first[1];
+	  		if((board[x][y]][0]==0) && (!visited.contains((x,y+1)))) {
+	  			visited.add((x,y+1));
+	  			parent[(x,y+1)] = first;
+	  		}
+	  		if((board[x][y]][1]==0) && (!visited.contains((x+1,y)))) {
+	  			visited.add((x+1,y));
+	  			parent[(x+1,y)] = first;
+	  		}
+	  		if((board[x][y]][2]==0) && (!visited.contains((x,y-1)))) {
+	  			visited.add((x,y-1));
+	  			parent[(x,y-1)] = first;
+	  		}
+	  		if((board[x][y]][3]==0) && (!visited.contains((x-1,y)))) {
+	  			visited.add((x-1,y));
+	  			parent[(x-1,y)] = first;
+	  		}
 	  	}
-
 		return start;
-		
 	}
 }
