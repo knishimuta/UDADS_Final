@@ -8,9 +8,8 @@ import java.util.HashMap;
 
 public class MazeWriter {
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	static void  buildMaze(int[][][] b) {
-		
+
 		System.out.println("\n ~~~~~~~~~~~ Begin buildMaze feedback. ~~~~~~~~~~~ \n");
 		/**
 		 * NOTE --> Written based on the assumption that the maze is square
@@ -26,24 +25,17 @@ public class MazeWriter {
 		 *    choose from
 		 */
 
-		ArrayList<ArrayList> unusedVertices = new ArrayList<ArrayList>();
+		HashMap<int[], HashMap<Integer, Boolean>> unusedVertices = new HashMap<int[], HashMap<Integer, Boolean>>();
+		ArrayList<int[]> keyChoices = new ArrayList<int[]>();
 
 		// Fill unusedVertices with the blank vertices in the maze
 
 		for(int i = 0; i < b.length; i++) {
 			for(int j = 0; j < b[i].length; j++) {
 				if(!arrayContains(b[i][j], 1)) {
-					ArrayList<Integer> vertexID = new ArrayList<Integer>();
-					vertexID.add(i);
-					vertexID.add(j);
-
-					// Adding direction data to vertices
-					for(int direction = 0; direction < 4; direction++) {
-						vertexID.add(direction);
-					}
-					System.out.println("Adding {" + vertexID.get(0) + ", " + vertexID.get(1) + "}"
-							+ " as unused vertex");
-					unusedVertices.add(vertexID);
+					int[] coordinates = {i, j};
+					unusedVertices.put(coordinates, addDirections(coordinates));
+					keyChoices.add(coordinates);
 				}
 				else {
 					continue;
@@ -52,13 +44,6 @@ public class MazeWriter {
 			}
 		}
 
-		System.out.print("List of unused vertices: ");
-		for(int i = 0; i < unusedVertices.size(); i++) {
-			System.out.print("{");
-			ArrayList<Integer> item = unusedVertices.get(i);
-			System.out.print(item.get(0) + ", " + item.get(1) + "} ");
-		}
-		System.out.println("\n");
 
 		/*
 		 * Pick random unused vertex and use it to spawn a wall
@@ -67,13 +52,24 @@ public class MazeWriter {
 		 */
 
 		while(!unusedVertices.isEmpty()) {
-			int vertexToUse = pickRandNumber(0, unusedVertices.size() - 1);
-			ArrayList<Integer> initialVertex = unusedVertices.remove(vertexToUse);
-			int x = initialVertex.get(0);
-			int y = initialVertex.get(1);
-			System.out.println("Vertices left: "+ unusedVertices.size());
-			System.out.println("Index of vertex to use: " + vertexToUse);
-			System.out.println("Vertex chosen: {" + x + ", " + y + "}");
+			int randVertexIndex = pickRandNumber(0, keyChoices.size()-1);
+			int[] thisVertex = keyChoices.remove(randVertexIndex);
+			HashMap<Integer, Boolean> thisVertexDirections = unusedVertices.remove(thisVertex);
+
+			int x = thisVertex[0];
+			int y = thisVertex[1];
+
+
+			ArrayList<Integer> possibleDirections = new ArrayList<Integer>();
+			for(int i = 0; i < 4; i++) {
+				if(thisVertexDirections.containsKey(i)) {
+					possibleDirections.add(i);
+				}
+				else {
+					continue;
+				}
+			}
+			int thisDirection = possibleDirections.get(pickRandNumber(0, possibleDirections.size()-1));
 
 			/*
 			 * Now to make the walls!
@@ -82,72 +78,73 @@ public class MazeWriter {
 			 *   3 + 1  -->  W + E
 			 *     2           S
 			 */
-			ArrayList<Integer> availableDirections = new ArrayList<Integer>();
-			for(int i = 2; i < initialVertex.size(); i++) {
-				availableDirections.add(initialVertex.get(i));
-			}
-			int chosenDirection = pickRandNumber(0, availableDirections.size()-1);
-			System.out.println("Number of directions to choose from: " + availableDirections.size());
-			System.out.print("Available Directions:");
-			for(int i = 0; i < availableDirections.size(); i++) {
-				System.out.print(" " + availableDirections.get(i));
-			}
-			System.out.println("");
-			System.out.println("Direction chosen: " + chosenDirection + "\n");
-
-			if(chosenDirection == 0) {
+			if(thisDirection == 0) {
 				b[x][y][0] = 1;
-				b[x][y+1][2] = 1;
+				b[x][y + 1][2] = 1;
 
-				if(y == 1) {
-					b[x][y+1][0] = 1;
-					b[x][y+2][2] = 1;
-
-					for(int i = 0; i < unusedVertices.size(); i++) {
-						ArrayList<Integer> thisVertex = unusedVertices.remove(i);
-						ArrayList<Integer> thisVertexDirections = new ArrayList<Integer>();
-						for(int j = 2; j < thisVertex.size(); j++) {
-							thisVertexDirections.add(thisVertex.get(j));
-						}
-						if((thisVertex.get(0) == 2) && (thisVertexDirections.contains(3))) {
-							thisVertex.remove(3);
-						}
-						if((thisVertex.get(0) == 1) && (thisVertexDirections.contains(1))) {
-							thisVertex.remove(1);
-						}
-						unusedVertices.add(thisVertex);
+				if((thisVertexDirections.get(thisDirection) /*== true*/) && (y == 1)){
+					b[x][y + 1][0] = 1;
+					b[x][y + 2][2] = 1;
+					
+					if(x == 1) {
+						removeDirection(unusedVertices, keyChoices, 3);
+					}
+					else {
+						removeDirection(unusedVertices, keyChoices, 1);
 					}
 				}
-
-
 			}
-			if(chosenDirection == 1) {
+			
+			if(thisDirection == 1) {
 				b[x][y][1] = 1;
-				b[x+1][y][3] = 1;
+				b[x + 1][y][3] = 1;
 
-				if(x == 1) {
-					b[x+1][y][1] = 1;
-					b[x+2][y][3] = 1;
+				if((thisVertexDirections.get(thisDirection)) && (x == 1)){
+					b[x + 1][y][1] = 1;
+					b[x + 2][y][3] = 1;
+					
+					if(y == 1) {
+						removeDirection(unusedVertices, keyChoices, 2);
+					}
+					else {
+						removeDirection(unusedVertices, keyChoices, 0);
+					}
 				}
 			}
-			if(chosenDirection == 2) {
+			if(thisDirection == 2) {
 				b[x][y][2] = 1;
-				b[x][y-1][0] = 1;
+				b[x][y - 1][0] = 1;
 
-				if(y == 2) {
-					b[x][y-1][2] = 1;
-					b[x][y-2][0] = 1;
+				if((thisVertexDirections.get(thisDirection)) && (y == 2)){
+					b[x][y - 1][2] = 1;
+					b[x][y - 2][0] = 1;
+					
+					if(x == 1) {
+						removeDirection(unusedVertices, keyChoices, 3);
+					}
+					else {
+						removeDirection(unusedVertices, keyChoices, 1);
+					}
 				}
 			}
-			if(chosenDirection == 3) {
+			
+			if(thisDirection == 3) {
 				b[x][y][3] = 1;
-				b[x-1][y][1] = 1;
+				b[x - 1][y][1] = 1;
 
-				if(x == 2) {
-					b[x-1][y][3] = 1;
-					b[x-2][y][1] = 1;
+				if((thisVertexDirections.get(thisDirection)) && (x == 2)){
+					b[x - 1][y][3] = 1;
+					b[x - 2][y][1] = 1;
+					
+					if(y == 1) {
+						removeDirection(unusedVertices, keyChoices, 2);
+					}
+					else {
+						removeDirection(unusedVertices, keyChoices, 0);
+					}
 				}
 			}
+
 
 		}
 
@@ -178,6 +175,39 @@ public class MazeWriter {
 		number = number + lowerBound;
 
 		return number;
+
+	}
+
+	static HashMap<Integer, Boolean> addDirections(int[] coor){
+		HashMap<Integer, Boolean> hm = new HashMap<Integer, Boolean>();
+
+		if(coor[0] == 1) {
+			hm.put(1, true);
+			hm.put(3, false);
+		}
+		if(coor[0] == 2) {
+			hm.put(3, true);
+			hm.put(1, false);
+		}
+		if(coor[1] == 1) {
+			hm.put(0, true);
+			hm.put(2, false);
+		}
+		if(coor[1] == 2) {
+			hm.put(2, true);
+			hm.put(0, false);
+		}
+
+		return hm;
+	}
+
+	static void removeDirection(HashMap<int[], HashMap<Integer, Boolean>> vertices, ArrayList<int[]> keys, int directionToRemove) {
+		for(int i = 0; i < keys.size(); i++) {
+			HashMap<Integer, Boolean> vertexDirections = vertices.get(keys.get(i));
+			if(vertexDirections.containsKey(directionToRemove)) {
+				vertexDirections.remove(directionToRemove);
+			}
+		}
 	}
 
 }
