@@ -5,6 +5,8 @@ import java.awt.*;
 import javax.swing.*;
 
 public class FullFrame extends JPanel{
+	
+	public MazeBoard MB = null;
 
 	//MAIN
 	public static void main(String[] args) {
@@ -23,6 +25,7 @@ public class FullFrame extends JPanel{
 	FullFrame(){
 		
 		
+		
 		this.setLayout(new BorderLayout());
 
 		
@@ -31,10 +34,8 @@ public class FullFrame extends JPanel{
 		 */
 		JPanel titlePanel = new JPanel();
 		titlePanel.setLayout(new BorderLayout());
-		JTextField title = new JTextField("Cool Maze Thing");
-		JTextField subtitle = new JTextField("A Collaboration by Joan, Kyle, and MK");
-		title.setBackground(new java.awt.Color(179, 255, 230)); //light blue-green
-		subtitle.setBackground(new java.awt.Color(179, 255, 230)); //light blue-green
+		JLabel title = new JLabel("Cool Maze Thing");
+		JLabel subtitle = new JLabel("A Collaboration by Joan, Kyle, and MK");
 		titlePanel.add(title, BorderLayout.NORTH);
 		titlePanel.add(subtitle,BorderLayout.CENTER);
 		this.add(titlePanel, BorderLayout.NORTH);
@@ -84,7 +85,7 @@ public class FullFrame extends JPanel{
 		
 		//Draw Maze...somehow
 		//"Call" mazePanel class
-		MazePanel MP = new MazePanel();
+		MazePanel MP = new MazePanel(this);
 		this.add(MP, BorderLayout.CENTER);
 		
 		// *******************************************************************************
