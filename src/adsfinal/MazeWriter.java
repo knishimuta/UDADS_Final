@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class MazeWriter {
 
-	static void  buildMaze(int N) {
+	static int[][][] buildMaze(int N) {
 
 		int[][][] b = new int[N][N][4];
 
@@ -93,7 +93,7 @@ public class MazeWriter {
 
 
 		}
-		Maze.drawBoard(b);
+		return b;
 	}
 	
 
