@@ -34,8 +34,8 @@ public class FullFrame extends JPanel{
 		 */
 		JPanel titlePanel = new JPanel();
 		titlePanel.setLayout(new BorderLayout());
-		JLabel title = new JLabel("Cool Maze Thing");
-		JLabel subtitle = new JLabel("A Collaboration by Joan, Kyle, and MK");
+		JLabel title = new JLabel("Maze (not actually) Runner");
+		JLabel subtitle = new JLabel("A Collaboration of Continual Failures by Joan, Kyle, MK, and rob (the bug)");
 		titlePanel.add(title, BorderLayout.NORTH);
 		titlePanel.add(subtitle,BorderLayout.CENTER);
 		this.add(titlePanel, BorderLayout.NORTH);
@@ -59,7 +59,7 @@ public class FullFrame extends JPanel{
 		pause.setBackground(new java.awt.Color(255, 77, 77)); //red
 		JButton resume = new JButton("Resume");		
 		resume.setBackground(new java.awt.Color(0, 102, 0)); //green
-		JButton idek = new JButton("Idek...but this is a button");
+		JButton idek = new JButton("Idekrn");
 		idek.setBackground(new java.awt.Color(204, 153, 255)); //purple
 		
 		//Add buttons to controlPanel

@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class MazeBoard{
 	static int WIDTH = 3;
 	static int HEIGHT = 3;
-	static int[][][] board = new int[WIDTH][HEIGHT][4];
+	public static int[][][] board = new int[WIDTH][HEIGHT][4];
 	static boolean[][] visited = new boolean[WIDTH][HEIGHT];
 
 	public static void main(String[] args){
@@ -69,11 +69,14 @@ public class MazeBoard{
 				}
 			}
 		}
-
+		Maze.drawBoard(board);
 		// Print the board
 		for(int x = 0; x < WIDTH; x++){
 			for(int y = 0; y < HEIGHT; y++){
-				System.out.printf("(%d, %d): %s\n", x, y, Arrays.toString(board[x][y]));
+				String theBS = Arrays.toString(board[x][y]);
+				System.out.println(theBS);
+//				System.out.printf("(%d, %d): %s\n", x, y, Arrays.toString(board[x][y]));
+//				System.out.println(Arrays.toString(board[x][y]));
 				visited[x][y] = false;
 			}
 		}

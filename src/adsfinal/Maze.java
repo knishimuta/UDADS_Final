@@ -3,7 +3,8 @@ package adsfinal;
 import javax.swing.JFrame;
 
 public class Maze extends JFrame{
-	static int N = 4;
+	static int N = 20;
+	/*
 	public static int[][][] board =
 		{
 				{{1,1,0,0},{1,0,1,0},{1,0,1,0},{0,1,1,0}}, //Line 0
@@ -11,13 +12,13 @@ public class Maze extends JFrame{
 				{{0,1,0,1},{0,0,0,0},{0,0,0,0},{0,1,0,1}}, //Line 2
 				{{1,0,0,1},{0,0,1,0},{1,0,0,0},{0,0,1,1}}  //Line 3
 		};
+		*/
 
 	public static void main(String[] args) {
-		drawBoard(board);
-		neighborsOf(0, 0);
-		neighborsOf(1, 1);
 		
-		MazeWriter.buildMaze(board);
+		
+		drawBoard(MazeWriter.buildMaze(N));
+		
 	}
 
 	
@@ -47,7 +48,7 @@ public class Maze extends JFrame{
 		}
 	}
 
-	public static void neighborsOf(int x, int y) {
+	/*public static void neighborsOf(int x, int y) {
 		System.out.printf("Neighbors of (%d, %d)\n", x, y);
 		if(board[x][y+1][1] == 0) System.out.println("N");
 		if(board[x+1][y][0] == 0) System.out.println("E");
@@ -55,5 +56,6 @@ public class Maze extends JFrame{
 		if(board[x][y][0] == 0) System.out.println("W");
 	}
 
+*/
 
 }

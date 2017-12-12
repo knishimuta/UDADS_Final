@@ -9,15 +9,8 @@ public class MazeRunner {
 
 	static HashMap<Integer,Integer> parent = new HashMap<Integer,Integer>();
 	static int[] rob = {0,0};		
-	static int[] end = {2,1};
 	static int robInt = 1000*rob[0] + rob[1];
-
-	/*
-	 * Joan to do:
-	 * -Use board from Maze.java to find “neighbors” s.t. 1 means wall and 0 means neighbor that “bug” can move to
-	 * -Use linked list to get queue going for breadth first search to find shortest pathway
-
-	 */
+	static int[] end = {MazePanel.N - 1, 1};
 
 	public static void main(String[] args) {
 		MazeBoard mb = new MazeBoard();
