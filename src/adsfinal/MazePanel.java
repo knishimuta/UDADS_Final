@@ -13,16 +13,23 @@ public class MazePanel extends JPanel{
 
 
 	//Initiate global variables
-	static int MPWIDTH = 700;
+	static int MPWIDTH = 900;
 	static int MPHEIGHT = MPWIDTH;
-	static int N = 41;
+	static int N = 31; //Number for board based on vertices 
+	static int BR = N-1; //Board room (for a 3x3 board, BR == 3)
 	static int TILEWIDTH = MPWIDTH/N;
 	static int TILEHEIGHT = MPHEIGHT/N;
 
-//	static int BUFFER = 5;
+	//	static int BUFFER = 5;
 
-	public static int[][][] board = MazeWriter.buildMaze(N);
-//	static boolean[][] visited = new boolean[mbWIDTH][mbHEIGHT];
+	//walls array for Kyle's MazeWriter.java
+	public static int[][][] walls = MazeWriter.buildMaze(N);
+
+	//board array for Joanie's MazeRunner.java
+	public static int[][][] board = new int[BR][BR][4];
+
+
+	//	static boolean[][] visited = new boolean[mbWIDTH][mbHEIGHT];
 
 	FullFrame parent = null;
 
@@ -48,71 +55,114 @@ public class MazePanel extends JPanel{
 				bom.drawRect(i*TILEWIDTH, j*TILEHEIGHT+TILEHEIGHT, TILEWIDTH, TILEHEIGHT);
 			}
 		}
-		
-//		mazeBoard();
-		
+
+		//		mazeBoard();
+
 		//draw walls of maze based off of MazeWriter.java
 		Graphics2D wm = (Graphics2D) gg; //wm == walls of maze
 		wm.setColor(new java.awt.Color(30,200,30)); //green
 		wm.setStroke(new BasicStroke(4)); //thicker line
-		
+
 		for(int x=0; x<N; x++) {
 			for(int y=0; y<N; y++) {
-				
+
 				int alpha = x*TILEWIDTH;
 				int beta = (N-y)*TILEHEIGHT;
-				
-				if(board[x][y][0] == 1)
+
+				if(walls[x][y][0] == 1)
 					wm.drawLine(alpha, beta, 
 							alpha, beta-TILEHEIGHT);
-				
-				if(board[x][y][1] == 1)
+
+				if(walls[x][y][1] == 1)
 					wm.drawLine(alpha+TILEWIDTH, beta, alpha, beta);
-				
-				if(board[x][y][2] == 1)
+
+				if(walls[x][y][2] == 1)
 					wm.drawLine(alpha, beta, alpha, beta+TILEHEIGHT);
-				
-				if(board[x][y][3] == 1)
+
+				if(walls[x][y][3] == 1)
 					wm.drawLine(alpha, beta, alpha-TILEHEIGHT, beta);
-						
+
 			}
 		}
-		
-		//draw exit
+
+
+
+
+		//draw exit *********************************************************************************************
 		Graphics2D em = (Graphics2D) gg; //em == exit of maze
 		em.setColor(new java.awt.Color(237, 237, 237)); //off-white
 		em.setStroke(new BasicStroke(4)); //thicker line
-		
 		em.drawLine(N*TILEWIDTH-TILEWIDTH, N*TILEHEIGHT-TILEHEIGHT, N*TILEWIDTH-TILEWIDTH, N*TILEHEIGHT-2*TILEHEIGHT);
-		
-		
-		//draw rob bug
+		// *******************************************************************************************************
+
+
+
+		//draw rob bug *******************************************************************************************
 		Graphics2D bm = (Graphics2D) gg; 
-		
 		bm.setColor(new java.awt.Color(32, 135, 135));
-		
 //		bm.fillRect((TILEWIDTH/4), (N*TILEHEIGHT)-(TILEHEIGHT/4)- TILEHEIGHT/2, TILEWIDTH/2, TILEHEIGHT/2);
 		bm.fillOval((TILEWIDTH/4), (N*TILEHEIGHT)-(TILEHEIGHT/4)- TILEHEIGHT/2, TILEWIDTH/2, TILEHEIGHT/2);
+
 		
+		
+		//Converts the wall-based maze into a room-based maze ****************************************************
+		for(int x=0; x<BR; x++) {
+			for(int y=0; y<BR; y++) {
+				if(walls[x][y][0] == 1)
+					board[x][y][3] = 1;
+
+				if(walls[x][y][1] == 1)
+					board[x][y][2] = 1;
+
+				if(walls[x+1][y+1][2] == 1)
+					board[x][y][1] = 1;
+
+				if(walls[x+1][y+1][3] == 1)
+					board[x][y][0] = 1;
+			}
+
+		}
+		
+//		//NEEDS FIXING OF SOME SORT
 //		while(!Arrays.equals(MazeRunner.rob, MazeRunner.end)) {
 //			moveRob();
 //			int robx = MazeRunner.rob[0];
 //			int roby = MazeRunner.rob[1];
-//			
-//			bm.setColor(new java.awt.Color(32, 135, 135));
+//
 //			bm.fillRect((TILEWIDTH/4) + robx, (N*TILEHEIGHT)-(TILEHEIGHT/4)-roby- TILEHEIGHT/2, TILEWIDTH/2, TILEHEIGHT/2);
 //			
 //		}
-		
-		
-		
+
 	}
-//
+//	
+//	//figures out where to move the rob bug next
 //	public static void moveRob() {
 //		MazeRunner.rob = MazeRunner.nextStep(board, MazeRunner.rob, MazeRunner.end);
 //	}
 
+
+
 }
+
+//while(!Arrays.equals(MazeRunner.rob, MazeRunner.end)) {
+//	moveRob();
+//	int robx = MazeRunner.rob[0];
+//	int roby = MazeRunner.rob[1];
+//	
+//	bm.setColor(new java.awt.Color(32, 135, 135));
+//	bm.fillRect((TILEWIDTH/4) + robx, (N*TILEHEIGHT)-(TILEHEIGHT/4)-roby- TILEHEIGHT/2, TILEWIDTH/2, TILEHEIGHT/2);
+//	
+//}
+
+
+
+
+
+
+
+
+
+
 
 
 
