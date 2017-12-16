@@ -95,39 +95,40 @@ public class MazeWriter {
 		}
 		return b;
 	}
-	
 
-static boolean arrayContains(int[] array, int x) {
-	for(int i = 0; i < array.length; i++) {
-		if(array[i] == x) {
-			return true;
+
+
+	static boolean arrayContains(int[] array, int x) {
+		for(int i = 0; i < array.length; i++) {
+			if(array[i] == x) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	// interval is inclusive 
+	static int pickRandNum(int lowerBound, int upperBound) {
+		int number = 0;
+		if(lowerBound > upperBound){
+			System.out.println("Please ensure that you enter your lower bound and then upper bound");
+			return 0;
+		}
+		double interval = upperBound - lowerBound;
+		number = (int) Math.round(Math.random()*interval);
+		number = number + lowerBound;
+
+		return number;
+
+	}
+
+	static void removeDirection(HashMap<int[], HashMap<Integer, Boolean>> vertices, ArrayList<int[]> keys, int directionToRemove) {
+		for(int i = 0; i < keys.size(); i++) {
+			HashMap<Integer, Boolean> vertexDirections = vertices.get(keys.get(i));
+			if(vertexDirections.containsKey(directionToRemove)) {
+				vertexDirections.remove(directionToRemove);
+			}
 		}
 	}
-	return false;
-}
-
-// interval is inclusive 
-static int pickRandNum(int lowerBound, int upperBound) {
-	int number = 0;
-	if(lowerBound > upperBound){
-		System.out.println("Please ensure that you enter your lower bound and then upper bound");
-		return 0;
-	}
-	double interval = upperBound - lowerBound;
-	number = (int) Math.round(Math.random()*interval);
-	number = number + lowerBound;
-
-	return number;
-
-}
-
-static void removeDirection(HashMap<int[], HashMap<Integer, Boolean>> vertices, ArrayList<int[]> keys, int directionToRemove) {
-	for(int i = 0; i < keys.size(); i++) {
-		HashMap<Integer, Boolean> vertexDirections = vertices.get(keys.get(i));
-		if(vertexDirections.containsKey(directionToRemove)) {
-			vertexDirections.remove(directionToRemove);
-		}
-	}
-}
 
 }

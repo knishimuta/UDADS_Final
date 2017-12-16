@@ -3,7 +3,7 @@ package adsfinal;
 import javax.swing.JFrame;
 
 public class Maze extends JFrame{
-	static int N = 20;
+	static int N = 6;
 	/*
 	public static int[][][] board =
 		{
