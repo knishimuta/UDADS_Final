@@ -4,7 +4,6 @@
 package adsfinal;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.HashMap;
 
 public class MazeWriter {
@@ -43,7 +42,6 @@ public class MazeWriter {
 
 		for(int i = 1; i < N-1; i++) {
 			for(int j = 1; j < N-1; j++) {
-				int[] newPoint = {i, j};
 				unusedVertices.add(N*j + i);
 			}
 		}
@@ -96,7 +94,66 @@ public class MazeWriter {
 		return b;
 	}
 
+	static int[][][] removeWall(int[][][] b, int x, int y, int dir){
 
+		/*
+		 * 0. Check that wall is movable (i.e. that the wall
+		 *    exists and that it is not an edge)
+		 * 1. Remove wall (make sure to remove both directions of 
+		 *    wall)
+		 * 2. Add wall in random location
+		 * 3. Look for cycle
+		 * 4. Remove wall that is a member of cycle but is not the
+		 *    wall that was just added
+		 */
+
+		/*
+		 * This is the height of the maze only,  but since the maze
+		 * should be square it shouldn't matter whether the height
+		 * or width is chosen. N should apply to both.
+		 */
+		int N = b.length; 
+		
+		// Checks to see if selected wall is an edge.
+		if(isEdge(b, x, y, dir)){
+			System.out.println("Cannot change edges. Please try again.");
+			return b;
+		}
+		else {
+			
+			// Checks to see if selected wall is empty.
+			if(b[x][y][dir] != 1) {
+				System.out.println("That wall does not exist. Please try again.");
+				return b;
+			}
+			else {
+				
+				
+				// Removing selected wall.
+				if(dir == 0) {
+					b[x][y][0] = 0;
+					b[x][y+1][2] = 0;
+				}
+				if(dir == 1) {
+					b[x][y][1] = 0;
+					b[x+1][y][3] = 0;
+				}
+				if(dir == 2) {
+					b[x][y][2] = 0;
+					b[x][y-1][0] = 0;
+				}
+				if(dir == 3) {
+					b[x][y][3] = 0;
+					b[x-1][y][1] = 0;
+				}
+				
+				int newX = pickRandNum(0, N - 1);
+				
+				System.out.println("Changed (" + x + ", " + y + ") in direction " + dir);
+				return b;
+			}
+		}
+	}
 
 	static boolean arrayContains(int[] array, int x) {
 		for(int i = 0; i < array.length; i++) {
@@ -129,6 +186,30 @@ public class MazeWriter {
 				vertexDirections.remove(directionToRemove);
 			}
 		}
+	}
+
+	static boolean isEdge(int[][][] b, int x, int y, int dir) {
+		if(y == 0) {
+			if(dir == 1 || dir == 3) {
+				return true;
+			}
+		}
+		if(y == b.length - 1) {
+			if(dir == 1 || dir == 3) {
+				return true;
+			}
+		}
+		if(x == 0) {
+			if(dir == 0 || dir == 2) {
+				return true;
+			}
+		}
+		if(x == b[x].length - 1) {
+			if(dir == 0 || dir == 2) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

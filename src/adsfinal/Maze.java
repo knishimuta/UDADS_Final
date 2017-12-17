@@ -17,7 +17,7 @@ public class Maze extends JFrame{
 	public static void main(String[] args) {
 		
 		
-		drawBoard(MazeWriter.buildMaze(N));
+		drawBoard(MazeWriter.removeWall(MazeWriter.buildMaze(N), 1, 2, 1));
 		
 	}
 
