@@ -113,42 +113,37 @@ public class MazeWriter {
 		 * or width is chosen. N should apply to both.
 		 */
 		int N = b.length; 
-		
+
 		// Checks to see if selected wall is an edge.
 		if(isEdge(b, x, y, dir)){
 			System.out.println("Cannot change edges. Please try again.");
 			return b;
 		}
 		else {
-			
+
 			// Checks to see if selected wall is empty.
 			if(b[x][y][dir] != 1) {
 				System.out.println("That wall does not exist. Please try again.");
 				return b;
 			}
 			else {
-				
-				
+
+
 				// Removing selected wall.
-				if(dir == 0) {
-					b[x][y][0] = 0;
-					b[x][y+1][2] = 0;
+				changeWalls(b, x, y, dir, false);
+
+				// Make new wall
+				int newX = pickRandNum(1, N-2);
+				int newY = pickRandNum(1, N-2);
+				int newDir = pickRandNum(0, 3);
+				while(b[newX][newY][newDir] == 1) {
+					newX = pickRandNum(1, N-2);
+					newY = pickRandNum(1, N-2);
+					newDir = pickRandNum(0, 3);
 				}
-				if(dir == 1) {
-					b[x][y][1] = 0;
-					b[x+1][y][3] = 0;
-				}
-				if(dir == 2) {
-					b[x][y][2] = 0;
-					b[x][y-1][0] = 0;
-				}
-				if(dir == 3) {
-					b[x][y][3] = 0;
-					b[x-1][y][1] = 0;
-				}
-				
-				int newX = pickRandNum(0, N - 1);
-				
+				changeWalls(b, newX, newY, newDir, true);
+
+
 				System.out.println("Changed (" + x + ", " + y + ") in direction " + dir);
 				return b;
 			}
@@ -212,4 +207,45 @@ public class MazeWriter {
 		return false;
 	}
 
+	static void changeWalls(int[][][] board, int x, int y, int dir, boolean add) {
+		if(add) {
+			if(dir == 0) {
+				board[x][y][0] = 1;
+				board[x][y+1][2] = 1;
+			}
+			if(dir == 1) {
+				board[x][y][1] = 1;
+				board[x+1][y][3] = 1;
+			}
+			if(dir == 2) {
+				board[x][y][2] = 1;
+				board[x][y-1][0] = 1;
+			}
+			if(dir == 3) {
+				board[x][y][3] = 1;
+				board[x-1][y][1] = 1;
+			}
+		}
+		else {
+			if(dir == 0) {
+				board[x][y][0] = 0;
+				board[x][y+1][2] = 0;
+			}
+			if(dir == 1) {
+				board[x][y][1] = 0;
+				board[x+1][y][3] = 0;
+			}
+			if(dir == 2) {
+				board[x][y][2] = 0;
+				board[x][y-1][0] = 0;
+			}
+			if(dir == 3) {
+				board[x][y][3] = 0;
+				board[x-1][y][1] = 0;
+			}
+		}
+		
+	}
+	
+	
 }
