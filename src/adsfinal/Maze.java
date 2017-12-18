@@ -48,14 +48,8 @@ public class Maze extends JFrame{
 		}
 	}
 
-	/*public static void neighborsOf(int x, int y) {
-		System.out.printf("Neighbors of (%d, %d)\n", x, y);
-		if(board[x][y+1][1] == 0) System.out.println("N");
-		if(board[x+1][y][0] == 0) System.out.println("E");
-		if(board[x][y][1] == 0) System.out.println("S");
-		if(board[x][y][0] == 0) System.out.println("W");
-	}
+	
 
-*/
+
 
 }

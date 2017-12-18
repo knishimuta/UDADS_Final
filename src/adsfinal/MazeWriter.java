@@ -5,6 +5,7 @@ package adsfinal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class MazeWriter {
 
@@ -143,6 +144,9 @@ public class MazeWriter {
 				}
 				changeWalls(b, newX, newY, newDir, true);
 
+				//check for cycles
+				HashSet<int[]> visited = new HashSet<int[]>();
+				
 
 				System.out.println("Changed (" + x + ", " + y + ") in direction " + dir);
 				return b;
@@ -207,7 +211,8 @@ public class MazeWriter {
 		return false;
 	}
 
-	static void changeWalls(int[][][] board, int x, int y, int dir, boolean add) {
+	//boolean condition determines whether the function adds walls or removes them
+	static void changeWalls(int[][][] board, int x, int y, int dir, boolean add) { 
 		if(add) {
 			if(dir == 0) {
 				board[x][y][0] = 1;
@@ -244,8 +249,38 @@ public class MazeWriter {
 				board[x-1][y][1] = 0;
 			}
 		}
-		
+
 	}
-	
-	
+
+
+	static boolean containsCycles(int[][][] board) {
+		
+		return true;
+	}
+
+	/* 
+	 * Returns neighbors (neighboring coordinates linked by wall) in 
+	 * form of ArrayList of neighbors
+	 */
+	static ArrayList<int[]> getNeighbors(int[][][] board, int x, int y) {
+		ArrayList<int[]> neighbors = new ArrayList<int[]>();
+		int[] coordinates = new int[2];
+		if(board[x][y][0] == 1) {
+			coordinates[0] = x;
+			coordinates[1] = y+1;
+		}
+		if(board[x][y][1] == 1) {
+			coordinates[0] = x+1;
+			coordinates[1] = y;
+		}
+		if(board[x][y][2] == 1) {
+			coordinates[0] = x;
+			coordinates[1] = y-1;
+		}
+		if(board[x][y][3] == 1) {
+			coordinates[0] = x-1;
+			coordinates[1] = y;
+		}
+		return neighbors;
+	}
 }
